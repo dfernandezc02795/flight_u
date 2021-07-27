@@ -1,0 +1,38 @@
+.passengerRegistrationForm{
+    padding-left: 30%;
+    padding-right: 20%;
+    padding: 9%;
+    font-size: 20px;
+    height:1000px;
+
+}
+.btn{
+    margin-top: 1.5rem;
+}
+.btn-ag{
+    display: flex;
+    justify-content: space-evenly;
+    padding: 3rem;
+}
+.passenger-head{
+    display: flex;
+    justify-content: flex-end;
+}
+.title{
+    text-align: center;
+    padding: 1rem;
+}
+.btn-options{
+    display: flex;
+    gap: 1rem;
+}
+.vabar{
+    padding: 1rem;
+}
+.title-listPassenger{
+    text-align: center;
+     padding: 3rem;
+}
+.fa-save{
+    padding: 5px;
+}

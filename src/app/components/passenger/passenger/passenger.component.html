@@ -1,0 +1,255 @@
+<!-- <app-nav></app-nav> -->
+
+<div class="passengerRegistrationForm">
+
+    <!-- <div class="passenger-head">
+        <h6>
+            {{'Change language' | translate}}
+            <select #langSelect (change)="changeLang(langSelect.value)">
+                <option *ngFor="let lang of langs" [value]="lang">
+                    {{lang}}
+                </option>
+            </select>
+        </h6>
+    </div> -->
+
+    <h1 class="title">{{'Passenger Form' | translate}}</h1>
+
+    <div class="card">
+        <div class="card-header">
+            <strong>{{'Register passenger' | translate}}</strong>
+        </div>
+        <div class="card-body">
+            <form [formGroup]="passengerForm" ngNativeValidate autocomplete="off" (ngSubmit)="save()">
+                <div class="row">
+                    <div class="col-sm-12 col-md-6 col-lg-6">
+                        <div class="for-group">
+                            <label>{{'Name'| translate}}</label>
+                            <input type="text" formControlName="name" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-lg-6">
+                        <div class="for-group">
+                            <label>{{'Last Name'| translate}}</label>
+                            <input type="text" formControlName="lastName" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-lg-6">
+                        <div class="for-group">
+                            <label for="Tipo de documento">{{'Type Document'| translate}}</label> <br />
+                            <select name="Tipo de documento" id="Tipo de documento" formControlName="typeDocument"
+                                class="form-control">
+                                <option disabled="">{{'Select an Option' | translate}}</option>
+                                <option value="Cédula de ciudadanía">{{'Identification Card'| translate}}</option>
+                                <option value="Cédula de Extranjería">{{'Foreigner ID' | translate}}</option>
+                                <option value="Documento personal identificación">{{'Personal Identification Document' |
+                                    translate}}
+                                </option>
+                                <option value="Pasaporte">{{'Passport' | translate}}</option>
+                                <option value="Registro">{{'Registration' | translate}}</option>
+                                <option value="Tarjeta de Identidad">{{'Identify Card' | translate}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-lg-6">
+                        <div class="for-group">
+                            <label>{{'Number Document'| translate}}</label>
+                            <input type="number" formControlName="numberDocument" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-lg-6">
+                        <div class="for-group">
+                            <label>{{'Day of birth'| translate}}</label>
+                            <input type="date" formControlName="birthDate" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-lg-6">
+                        <div class="for-group">
+                            <label>{{'Telephone'| translate}}</label>
+                            <input type="tel" formControlName="telephone" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-lg-6">
+                        <div class="for-group">
+                            <label>{{'Email'| translate}}</label>
+                            <input type="email" formControlName="email" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-lg-6">
+                        <div class="for-group">
+                            <label>{{'Country' | translate}}</label>
+                            <select name="country" id="country" formControlName="countryId" class="form-control">
+                                <option [ngValue]="item" *ngFor="let item of countries">{{item.name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary" [disabled]="passengerForm.invalid"><i class="far fa-save"></i>{{'Save' | translate}}
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div class="card mt-5">
+        <div class="card-header">
+            <strong>{{'Search by document' | translate}}</strong>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-12 col-md-10 col-lg-12">
+                    <input type="text" name="searchPassenger" placeholder="{{'Enter document'|translate}}"
+                        class="form-control" #searchPassenger (keyup)="onSearch(searchPassenger.value)">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="isAlert"  class="alert alert-warning" role="alert">
+        {{alertMsg}}
+    </div>
+    <div *ngIf="isAlertSuccess" class="alert alert-success" role="alert">
+        {{alertMsgSuccess}}
+    </div>
+
+    <div class="card mt-5">
+        <div class="card-header">
+            <strong> {{'Passenger List' | translate}}</strong>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-12" class="card mt-3">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>{{'Name'| translate}}</th>
+                                <th>{{'Last Name'| translate}}</th>
+                                <th>{{'Type Document'| translate}}</th>
+                                <th>{{'Number Document'| translate}}</th>
+                                <th>{{'Day of birth' | translate}}</th>
+                                <th>{{'Telephone' | translate}}</th>
+                                <th>{{'Email' | translate}}</th>
+                                <th>{{'Country' | translate}}</th>
+                                <th>{{'Options' | translate}}</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr *ngFor="let item of passengers">
+                                <td>{{item.name}}</td>
+                                <td>{{item.lastName}}</td>
+                                <td>{{item.typeDocument}}</td>
+                                <td>{{item.numberDocument}}</td>
+                                <td>{{item.birthDate}}</td>
+                                <td>{{item.telephone}}</td>
+                                <td>{{item.email}}</td>
+                                <td>{{item.countryId.name}}</td>
+                                <td>
+                                    <div class="btn-options">
+                                        <button type="button" class="btn btn-success" (click)="edit (item)"
+                                            data-bs-toggle="modal" data-bs-target="#exampleModal">{{'Edit' |
+                                            translate}}</button>
+                                        <button type="button" class="btn btn-danger" (click)="delete (item)">{{'Remove'
+                                            |
+                                            translate}}</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- 
+<div class="passengerRegistrationForm">
+    <h2 class="title-listPassenger">{{'Passenger List' | translate}}</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>{{'Name'| translate}}</th>
+                <th>{{'Last Name'| translate}}</th>
+                <th>{{'Type Document'| translate}}</th>
+                <th>{{'Number Document'| translate}}</th>
+                <th>{{'Day of birth' | translate}}</th>
+                <th>{{'Telephone' | translate}}</th>
+                <th>{{'Email' | translate}}</th>
+                <th>{{'Country' | translate}}</th>
+                <th>{{'Options' | translate}}</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr *ngFor="let item of passengers">
+                <td>{{item.name}}</td>
+                <td>{{item.lastName}}</td>
+                <td>{{item.typeDocument}}</td>
+                <td>{{item.numberDocument}}</td>
+                <td>{{item.birthDate}}</td>
+                <td>{{item.telephone}}</td>
+                <td>{{item.email}}</td>
+                <td>{{item.countryId.name}}</td>
+                <td>
+                    <div class="btn-options">
+                        <button type="button" class="btn btn-success" (click)="edit (item)" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal">{{'Edit' | translate}}</button>
+                        <button type="button" class="btn btn-danger" (click)="delete (item)">{{'Remove' |
+                            translate}}</button>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div> -->
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">{{'Modify Data' | translate}}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="updateForm" ngNativeValidate autocomplete="off" (ngSubmit)="editi()" Add Expense>
+                    <div class="for-group">
+                        {{'Name'| translate}}
+                        <input type="text" formControlName="name" class="form-control">
+                    </div>
+                    <div class="for-group">
+                        <label>{{'Last Name'| translate}}</label>
+                        <input type="text" formControlName="lastName" class="form-control">
+                    </div>
+                    <div class="for-group">
+                        <label>{{'Number Document' | translate}}</label>
+                        <input type="number" formControlName="numberDocument" class="form-control" readonly>
+                    </div>
+                    <div class="for-group">
+                        <label>{{'Day of birth' | translate}}</label>
+                        <input type="date" formControlName="birthDate" class="form-control">
+                    </div>
+                    <div class="for-group">
+                        <label>{{'Telephone' | translate}}</label>
+                        <input type="tel" formControlName="telephone" class="form-control">
+                    </div>
+                    <div class="for-group">
+                        <label>{{'Email' | translate}}</label>
+                        <input type="email" formControlName="email" class="form-control">
+                    </div>
+                    <div class="for-group">
+                        <label>{{'Country' | translate}}</label>
+                        <select name="country" id="country" formControlName="countryId" class="form-control">
+                            <option [ngValue]="item" *ngFor="let item of countries">{{item.name}}</option>
+                        </select>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" [disabled]="updateForm.invalid">{{'Update' |
+                            translate}}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

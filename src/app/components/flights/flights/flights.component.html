@@ -1,0 +1,87 @@
+<!-- <app-nav></app-nav> -->
+<div class="flightListForm">
+    <h1>{{'Flight list' | translate}}</h1>
+
+    <div class="card mt-5">
+        <div class="card-header">
+            <strong> {{'Registered Flig' | translate}}</strong>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-12" class="card mt-3">
+                    <form [formGroup]="flightForm">
+
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>{{'Flight Number' | translate}}</th>
+                                    <th>{{'Flying Type' | translate}}</th>
+                                    <th>{{'State' | translate}}</th>
+                                    <th>{{'Airport' | translate}}</th>
+                                    <th>{{'Plane'| translate}}</th>
+                                    <th>{{'Reserve' | translate}}</th>
+                                    <th>prueba</th>
+                                    <th>{{'See Passenger List' | translate}}</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr *ngFor="let item of flights">
+                                    <td>{{item.flightNumber}}</td>
+                                    <td>{{item.flightType}}</td>
+                                    <td>{{item.stateFlight}}</td>
+                                    <td>{{item.airportId.name}}</td>
+                                    <td>{{item.planeId.registrationNumber}}</td>
+                                    <td>{{item.reserveId.codeReserve}}</td>
+                                    <td>{{item.reserveId.itineraryId.date}}</td>
+                                    <td>
+                                        <button type="button" name="searchFlightNumber" class="btn btn-success"
+                                            #searchFlightNumber (click)="onflightNumber(item.flightNumber)"
+                                            data-bs-toggle="modal" data-bs-target="#exampleModal">Ver Lista</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Pasajeros</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <form [formGroup]="flightPassenger" >
+
+
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>{{'Name'| translate}}</th>
+                                <th>{{'Last Name'| translate}}</th>
+                                <th>{{'Number Document'| translate}}</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr *ngFor="let item of flights">
+                                <td>{{item.passengerId.name}}</td>
+                                <td>{{item.passengerId.lastName}}</td>
+                                <td>{{item.passengerId.numberDocument}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+
+            </div>
+        </div>
+    </div>
